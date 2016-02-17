@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 )
 
@@ -160,24 +161,12 @@ func (t *token) String() string {
 // ---------------------------------------------------------------------------
 // Helpers
 
-func isUpper(r rune) bool {
-	return r >= 'A' && r <= 'Z'
-}
-
-func isLower(r rune) bool {
-	return r >= 'a' && r <= 'z'
-}
-
-func isNumber(r rune) bool {
-	return r >= '0' && r <= '9'
-}
-
 func isIdentifierFirst(r rune) bool {
-	return isUpper(r) || isLower(r) || r == '_'
+	return unicode.IsUpper(r) || unicode.IsLower(r) || r == '_'
 }
 
 func isIdentifier(r rune) bool {
-	return isIdentifierFirst(r) || isNumber(r)
+	return isIdentifierFirst(r) || unicode.IsDigit(r)
 }
 
 func isSymbol(r rune) bool {
